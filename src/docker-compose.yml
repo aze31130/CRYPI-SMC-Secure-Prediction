@@ -1,16 +1,29 @@
 version: "3.7"
 
 services:
-  modelowner:
-    build: ./model_owner
-    container_name: modelowner
-    hostname: modelowner
-    volumes:
-      - ../data/trained_model_coeffs.txt:/app/trained_model_coeffs.txt:ro
   dataowner:
     build: ./data_owner
     container_name: dataowner
     hostname: dataowner
     volumes:
+      - ../src/data_owner/setup.py:/app/setup.py
       - ../data/framingham_heart_disease_train.csv:/app/framingham_heart_disease_train.csv:ro
       - ../data/framingham_heart_disease_test.csv:/app/framingham_heart_disease_test.csv:ro
+    depends_on:
+      - modelowner
+    networks:
+      - predition_network
+
+  modelowner:
+    build: ./model_owner
+    container_name: modelowner
+    hostname: modelowner
+    volumes:
+      - ../src/data_owner/setup.py:/app/setup.py
+      - ../data/trained_model_coeffs.txt:/app/trained_model_coeffs.txt:ro
+    networks:
+      - predition_network
+
+networks:
+  predition_network:
+    driver: bridge
