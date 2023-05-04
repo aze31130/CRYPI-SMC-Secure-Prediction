@@ -1,3 +1,5 @@
 mpyc
 numpy
 gmpy2
+pandas
+scikit-learn
