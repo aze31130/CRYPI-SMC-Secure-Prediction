@@ -3,24 +3,43 @@ version: "3.7"
 services:
   dataowner:
     build: ./data_owner
+    command: python3 main.py -P localhost:5555 -P modelowner1:6666 -P modelowner2:7777 -I0
     container_name: dataowner
     hostname: dataowner
     volumes:
-      - ../src/data_owner/setup.py:/app/setup.py
       - ../data/framingham_heart_disease_train.csv:/app/framingham_heart_disease_train.csv:ro
       - ../data/framingham_heart_disease_test.csv:/app/framingham_heart_disease_test.csv:ro
-    depends_on:
-      - modelowner
+      - ../data/trained_model_coeffs.txt:/app/trained_model_coeffs.txt:ro
+    expose:
+      - 5555
     networks:
       - predition_network
 
-  modelowner:
+  modelowner1:
     build: ./model_owner
-    container_name: modelowner
-    hostname: modelowner
+    command: python3 main.py -P dataowner:5555 -P localhost:6666 -P modelowner2:7777 -I1
+    container_name: modelowner1
+    hostname: modelowner1
     volumes:
-      - ../src/data_owner/setup.py:/app/setup.py
+      - ../data/framingham_heart_disease_train.csv:/app/framingham_heart_disease_train.csv:ro
+      - ../data/framingham_heart_disease_test.csv:/app/framingham_heart_disease_test.csv:ro
       - ../data/trained_model_coeffs.txt:/app/trained_model_coeffs.txt:ro
+    expose:
+      - 6666
+    networks:
+      - predition_network
+
+  modelowner2:
+    build: ./model_owner
+    command: python3 main.py -P dataowner:5555 -P modelowner1:6666 -P localhost:7777 -I2
+    container_name: modelowner2
+    hostname: modelowner2
+    volumes:
+      - ../data/framingham_heart_disease_train.csv:/app/framingham_heart_disease_train.csv:ro
+      - ../data/framingham_heart_disease_test.csv:/app/framingham_heart_disease_test.csv:ro
+      - ../data/trained_model_coeffs.txt:/app/trained_model_coeffs.txt:ro
+    expose:
+      - 7777
     networks:
       - predition_network
 

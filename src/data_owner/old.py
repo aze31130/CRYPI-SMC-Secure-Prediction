@@ -7,7 +7,7 @@ from sklearn.linear_model import LogisticRegression
 
 
 def load_dataset(file):
-    data=pd.read_csv("./framingham_heart_disease_test.csv")
+    data=pd.read_csv("../../data/framingham_heart_disease_test.csv")
     # X/y splitting of data
     X = data.drop('TenYearCHD',axis=1)
     y=data['TenYearCHD']
@@ -19,7 +19,7 @@ def predict_proba(X_val, coeffs):
 
 def test():
     X_test, y_test = load_dataset("framingham_heart_disease_test.csv")
-    coeffs = np.loadtxt("./trained_model_coeffs.txt")
+    coeffs = np.loadtxt("../../data/trained_model_coeffs.txt")
     print("Proba for X_test[0]: {:.2f}%".format(100*predict_proba(X_test.iloc[0].to_numpy(), coeffs)))
     print("Proba for X_test[29]: {:.2f}%".format(100*predict_proba(X_test.iloc[29].to_numpy(), coeffs)))
 
@@ -31,7 +31,7 @@ async def prediction(male_share, age_share,
                      BPMeds_share, prevalentStroke_share, prevalentHyp_share,
                      diabetes_share, totChol_share, sysBP_share, diaBP_share,
                      BMI_share, heartRate_share, glucose_share):
-    coeffs = np.loadtxt("./trained_model_coeffs.txt")
+    coeffs = np.loadtxt("../../data/trained_model_coeffs.txt")
     table_share = [male_share, age_share,currentSmoker_share,
                    cigsPerDay_share,BPMeds_share, prevalentStroke_share,
                    prevalentHyp_share, diabetes_share,totChol_share,
