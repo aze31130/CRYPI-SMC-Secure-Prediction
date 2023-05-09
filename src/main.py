@@ -10,13 +10,13 @@ def predict_proba(X_val, coeffs):
 
 def test(patient):
     patient_array = np.array(patient.to_array())
-    coeffs = np.loadtxt("../../data/trained_model_coeffs.txt")
+    coeffs = np.loadtxt("../data/trained_model_coeffs.txt")
     print("Proba for given patient using given function: {:.2f}%".format(100*predict_proba(patient_array, coeffs)))
 
 # The function that will be given to all parties
 @mpc.coroutine
 async def prediction(table_shares):
-    coeffs = np.loadtxt("../../data/trained_model_coeffs.txt")
+    coeffs = np.loadtxt("../data/trained_model_coeffs.txt")
     # We tried to match the given function but we had an issue using the np.exp()
     # function. Because we did not find any way to approximate the exponential function
     # using the SMC model, our prediction will not be as accurate as they are in the model.
@@ -51,7 +51,6 @@ def main(patient):
 if __name__ == '__main__':
     #Instanciate a patient, prompt the user to fill all the input data
     patient = patient.Patient()
-
     #Compute the prediction using the given formula
     test(patient)
 

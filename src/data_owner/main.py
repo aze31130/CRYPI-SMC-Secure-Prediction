@@ -5,14 +5,12 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
-
 def load_dataset(file):
     data=pd.read_csv("./framingham_heart_disease_test.csv")
     # X/y splitting of data
     X = data.drop('TenYearCHD',axis=1)
     y=data['TenYearCHD']
     return X, y
-
 
 def predict_proba(X_val, coeffs):
     return 1/(1 + np.exp(-(np.dot(X_val, coeffs[1:])+coeffs[0])))
@@ -36,7 +34,6 @@ async def prediction(male_share, age_share,
                    cigsPerDay_share,BPMeds_share, prevalentStroke_share,
                    prevalentHyp_share, diabetes_share,totChol_share,
                    sysBP_share, diaBP_share, BMI_share,heartRate_share, glucose_share]
-    #TODO Add exp here
     return 1 / (1 + -np.dot(table_share, coeffs[1:]) + coeffs[0])
 
 def main():
@@ -79,8 +76,6 @@ def main():
     heartRate_share = mpc.input(secfloat(heartRate), senders=0)
     glucose_share = mpc.input(secfloat(glucose), senders=0)
     
-
-    # result = mpc.run(mpc.output(result_share))
     result = mpc.run(mpc.output(
         prediction(male_share, age_share, currentSmoker_share,
                    cigsPerDay_share, BPMeds_share, prevalentStroke_share,
@@ -97,24 +92,3 @@ if __name__ == '__main__':
     #test()
     main()
 #------------------------------------------------------------
-
-# s = mpc.input(secret_number, senders=0)
-# test = mpc.run(prediction(secret_number))
-
-# mpc.run(mpc.transfer(mpc.parties[0], my_age))
-
-# Print du résultat
-# print(mpc.run(mpc.output(mpc.sum(our_age))))
-# print(mpc.run(mpc.output(mpc.max(our_age))))
-
-# print(''.join(mpc.run(mpc.transfer("Hello world !"))))
-
-
-# SecInt
-# mpc.input()
-# mpc.output()
-# mpc.sum()
-#
-# mpc.parties (nbr de parties connectés)
-#
-# print("Variable:", await mpc.output(test))

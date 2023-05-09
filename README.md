@@ -19,7 +19,7 @@ pip install -r ./src/data_owner/requirements.txt
 If you want to execute the project directly, you can use the following command inside the src folder:
 
 ```
-python main.py -M3
+python main.py --parties 3
 ```
 
 This will execute the script and prompt you all the required information about your patient.
