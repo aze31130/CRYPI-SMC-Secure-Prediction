@@ -9,12 +9,12 @@ class Patient():
         self.prevalentStroke = int(input("Does the patient had previously had a stroke [1/0]:"))
         self.prevalentHyp = int(input("Does the patient was hypertensive [1/0]:"))
         self.diabetes = int(input("Does the patient had diabetes [1/0]:"))
-        self.totChol = int(input("Total Cholesterol level:"))
-        self.sysBP = int(input("Systoloc blood pressure:"))
-        self.diaBP = int(input("Diastolic blood pressure:"))
-        self.BMI = int(input("Body Mass Index:"))
-        self.heartRate = int(input("Heart rate:"))
-        self.glucose = int(input("Glucose level:"))
+        self.totChol = float(input("Total Cholesterol level:"))
+        self.sysBP = float(input("Systoloc blood pressure:"))
+        self.diaBP = float(input("Diastolic blood pressure:"))
+        self.BMI = float(input("Body Mass Index:"))
+        self.heartRate = float(input("Heart rate:"))
+        self.glucose = float(input("Glucose level:"))
     def to_array(self):
         return [self.male, self.age, self.currrentSmoker, self.cigsPerDay,
                 self.BPMeds, self.prevalentStroke, self.prevalentHyp,
